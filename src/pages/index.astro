@@ -36,27 +36,22 @@ const headSource = [
 
   <main id="main">
     <header class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <h1 class="display">It's done<span class="stop">.</span></h1>
-          <p class="sub">Same site. Same Tuesday. Almost nothing to patch.</p>
-          <p class="lede">
-            The original page is right about a lot: a screenshot is not a launch. But it compares a vibe-coded app
-            with WordPress and stops there. There is a third option, and it has been done since the build finished.
-          </p>
-          <div class="actions">
-            <a class="btn" href="#timeline">Run the same day →</a>
-            <a class="btn plain" href="#checklist">What's actually checked?</a>
-          </div>
-          <aside class="notice" aria-label="Privacy note">
-            <strong>Nothing loads before you say so.</strong>
-            <p>
-              This page runs no analytics and sets no cookies, so it shows no banner. That is a choice, not a
-              static-site default: the day marketing adds a tracker, a consent banner is a small library, and
-              the tracker stays blocked until a visitor accepts.
-            </p>
-            <p class="notice-link"><a href="/demo/consent">See a working one ↗</a></p>
-          </aside>
+      <div class="sky" aria-hidden="true">
+        <span class="stars s1"></span><span class="stars s2"></span><span class="stars s3"></span>
+        <i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
+        <i class="moon"></i>
+      </div>
+      <div class="wrap">
+        <p class="eyebrow">A reply, after dark</p>
+        <h1 class="display">It's <em>done</em>.<span class="check-badge" aria-hidden="true">✓</span></h1>
+        <p class="sub">Same site. Same Tuesday. Almost nothing to patch.</p>
+        <p class="lede">
+          The original page is right about a lot: a screenshot is not a launch. But it compares a vibe-coded app
+          with WordPress and stops there. There is a third option, and it has been done since the build finished.
+        </p>
+        <div class="actions">
+          <a class="btn" href="#timeline">Run the same day →</a>
+          <a class="btn plain" href="#checklist">What's actually checked?</a>
         </div>
 
         <div class="log-wrap">
@@ -72,6 +67,16 @@ const headSource = [
           </div>
           <div class="big-stamp" aria-hidden="true">Passed</div>
         </div>
+
+        <aside class="notice" aria-label="Privacy note">
+          <strong>Nothing loads before you say so.</strong>
+          <p>
+            This page runs no analytics and sets no cookies, so it shows no banner. That is a choice, not a
+            static-site default: the day marketing adds a tracker, a consent banner is a small library, and
+            the tracker stays blocked until a visitor accepts.
+          </p>
+          <p class="notice-link"><a href="/demo/consent">See a working one ↗</a></p>
+        </aside>
       </div>
     </header>
 
@@ -81,7 +86,7 @@ const headSource = [
         <div class="prose">
           <p>
             Sitemaps, 404s, social previews, metadata, consent, form handling, redirects, backups. A prompt that
-            produces a pretty hero section does not produce those. WordPress core is solid, and the original is
+            produces a pretty hero section does not produce those. WordPress core is well maintained, and the original is
             right that a fresh AI prompt will not give you roles, revisions and a sitemap by default.
           </p>
           <p>

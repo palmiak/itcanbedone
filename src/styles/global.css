@@ -132,13 +132,6 @@ a.by:hover { color: #fff; }
 .log-wrap .big-stamp { animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; animation-delay: 3s; }
 .log .row:nth-of-type(1) { animation-delay: 0.2s; } .log .row:nth-of-type(2) { animation-delay: 0.48s; } .log .row:nth-of-type(3) { animation-delay: 0.76s; } .log .row:nth-of-type(4) { animation-delay: 1.04s; } .log .row:nth-of-type(5) { animation-delay: 1.32s; } .log .row:nth-of-type(6) { animation-delay: 1.6s; } .log .row:nth-of-type(7) { animation-delay: 1.88s; } .log .row:nth-of-type(8) { animation-delay: 2.16s; } .log .row:nth-of-type(9) { animation-delay: 2.44s; } .log .row:nth-of-type(10) { animation-delay: 2.72s; }
 
-/* the consent-notice joke, as their floating banner */
-.notice { margin: 4.6rem auto 0; max-width: 31rem; text-align: left; background: #f4f2ff; color: var(--ink); border-radius: 14px; padding: 1.2rem 1.3rem 1.25rem; box-shadow: 0 20px 60px rgb(0 0 0 / 0.45); }
-.notice strong { font: 400 1.5rem/1.1 var(--serif); display: block; margin-bottom: 0.4rem; color: var(--ink); }
-.notice p { font-size: 0.95rem; line-height: 1.5; color: #3b4170; }
-.notice p + p { margin-top: 0.6rem; }
-.notice-link { font: 600 0.88rem var(--mono); }
-.notice a { color: #4a2fb8; }
 
 /* ---------- sections ---------- */
 .band { padding-block: clamp(3.75rem, 8vw, 6.5rem); border-top: 1px solid var(--line); background: var(--night-1); }
@@ -235,7 +228,9 @@ code { font-family: var(--mono); font-size: 0.9em; color: var(--lav); }
 
 /* closing */
 .closing { background: radial-gradient(90% 120% at 50% 120%, #3a2a78, var(--night-0) 70%); }
-.closing h2 { max-width: 16ch; font-size: clamp(2.6rem, 7vw, 5.4rem); color: #fff; }
+.closing .wrap { text-align: center; }
+.closing h2 { max-width: 18ch; margin-inline: auto; font-size: clamp(2.6rem, 7vw, 5.4rem); color: #fff; }
+.closing .prose p { margin-inline: auto; }
 
 footer.site { background: var(--night-0); padding-block: 2.2rem 3.2rem; border-top: 1px solid var(--line); }
 footer.site p { max-width: 72ch; }

@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+---
+<Base title="Consent + tracking demo | It's Done" description="A working consent banner on a static Astro page. The tracker stays blocked until you accept.">
+  <div class="bar"><div class="wrap"><a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a><a class="by" href="/#checklist">← back to the checklist</a></div></div>
+  <main class="wrap demo">
+    <h1 class="display">Consent, then tracking.</h1>
+    <div class="prose">
+      <p>
+        Astro has no built-in cookie consent, and most businesses need one the moment marketing wants analytics.
+        This page uses <a href="https://github.com/orestbida/cookieconsent" rel="noopener">vanilla-cookieconsent</a>{' '}
+        (the library behind the <a href="https://github.com/jop-software/astro-cookieconsent" rel="noopener">astro-cookieconsent</a> integration).
+        A script marked with a category is inert until that category is accepted.
+      </p>
+      <p class="small">The tracker below is a stand-in that sends nothing anywhere. The only cookie on this whole site is the consent choice itself, and it is only set here.</p>
+    </div>
+
+    <div class="demo-grid">
+      <div>
+        <h3>What the page is doing</h3>
+        <div class="log" id="status" aria-live="polite">
+          <div class="head">$ watch network</div>
+          <div class="row"><span>analytics.js</span><span id="s-tracker" class="zero">blocked · consent: none</span></div>
+          <div class="row"><span>consent cookie</span><span id="s-cookie" class="zero">not set</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn" type="button" id="open-prefs">Privacy settings</button>
+          <button class="btn plain" type="button" id="reset">Forget my choice</button>
+        </div>
+      </div>
+      <div>
+        <h3>The markup that does it</h3>
+<pre class="term">&lt;!-- inert until "analytics" is accepted --&gt;
+&lt;script type="text/plain"
+        data-category="analytics"
+        src="/demo/tracker.js"&gt;&lt;/script&gt;</pre>
+        <p class="small gap">Swap the src for your real analytics tag. The page works the same without JavaScript: the tracker just never loads.</p>
+      </div>
+    </div>
+  </main>
+
+  <script type="text/plain" data-category="analytics" src="/demo/tracker.js"></script>
+  <script src="../../scripts/consent-demo.ts"></script>
+</Base>

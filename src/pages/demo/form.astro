@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Form + bots demo | It's Done" description="A contact form with browser validation and a honeypot. Submit it empty, then play the bot.">
+  <div class="bar"><div class="wrap"><a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a><a class="by" href="/#checklist">← back to the checklist</a></div></div>
+  <main class="wrap demo">
+    <h1 class="display">Forms, then bots.</h1>
+    <div class="prose">
+      <p>
+        Submit it empty and the browser stops you. Then press <strong>Play the bot</strong>: it fills the hidden
+        trap field a human never sees, and the submission is dropped. This demo runs entirely in your browser and
+        sends nothing. In production the same markup posts to a form service.
+      </p>
+    </div>
+
+    <div class="demo-grid">
+      <form id="demo-form" class="form" action="#" method="post">
+        <label>Name <input name="name" required autocomplete="name" /></label>
+        <label>Email <input name="email" type="email" required autocomplete="email" /></label>
+        <label>Message <textarea name="message" rows="4" required minlength="10"></textarea></label>
+        <label class="trap" aria-hidden="true">Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        <div class="actions">
+          <button class="btn" type="submit">Send</button>
+          <button class="btn plain" type="button" id="bot">Play the bot</button>
+        </div>
+      </form>
+
+      <div>
+        <div class="log" aria-live="polite" id="form-log">
+          <div class="head">$ tail -f submissions</div>
+          <div class="row"><span>waiting for input…</span><span></span></div>
+        </div>
+        <h3 class="gap">In production, on Netlify</h3>
+<pre class="term">&lt;form name="contact" method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"&gt;</pre>
+        <p class="small gap">Netlify also runs every submission through Akismet. Vercel and Cloudflare offer BotID and Turnstile for the same job; both need a small function to receive the form.</p>
+      </div>
+    </div>
+  </main>
+  <script src="../../scripts/form-demo.ts"></script>
+</Base>

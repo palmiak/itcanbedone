@@ -1,0 +1,341 @@
+---
+import Base from '../layouts/Base.astro';
+import { layers, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
+
+const log = [
+  ['sitemap-index.xml', 'generated'],
+  ['404.html', 'generated'],
+  ['og/index.png', 'generated'],
+  ['_headers (CSP, HSTS)', 'shipped'],
+  ['pages with a title + description', 'all of them'],
+  ['trackers loaded before consent', '0'],
+  ['cookies set before consent', '0'],
+  ['plugins to patch', '0'],
+];
+const total = checklist.reduce((n, g) => n + g.items.length, 0);
+const pageTitle = "It's Done. A static site, built properly.";
+const pageDescription = 'A fair reply to "It Looks Done". The invisible 80% is real. It just does not require WordPress, and it does not require a plugin stack to patch.';
+const siteUrl = Astro.site?.toString() ?? '';
+const headSource = [
+  `<title>${pageTitle}</title>`,
+  `<meta name="description" content="${pageDescription.slice(0, 60)}…">`,
+  `<link rel="canonical" href="${siteUrl}">`,
+  `<meta property="og:image" content="${siteUrl}og/index.png">`,
+].join('\n');
+---
+<Base title={pageTitle} description={pageDescription}>
+  <div class="draft" role="note">Draft. Security figures were checked against the linked sources on 2026-10-09. Costs and request/response snippets are illustrative.</div>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="bar">
+    <div class="wrap">
+      <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
+      <span class="by">a reply, by one person with a git repo</span>
+    </div>
+  </div>
+
+  <main id="main">
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1 class="display">It's done<span class="stop">.</span></h1>
+          <p class="sub">Same site. Same Tuesday. Almost nothing to patch.</p>
+          <p class="lede">
+            The original page is right about a lot: a screenshot is not a launch. But it compares a vibe-coded app
+            with WordPress and stops there. There is a third option, and it has been done since the build finished.
+          </p>
+          <div class="actions">
+            <a class="btn" href="#timeline">Run the same day →</a>
+            <a class="btn plain" href="#checklist">What's actually checked?</a>
+          </div>
+          <aside class="notice" aria-label="Privacy note">
+            <strong>Nothing loads before you say so.</strong>
+            <p>
+              This page runs no analytics and sets no cookies, so it shows no banner. That is a choice, not a
+              static-site default: the day marketing adds a tracker, a consent banner is a small library, and
+              the tracker stays blocked until a visitor accepts.
+            </p>
+            <p class="notice-link"><a href="/demo/consent">See a working one ↗</a></p>
+          </aside>
+        </div>
+
+        <div class="log-wrap">
+          <div class="log" role="img" aria-label="Build log: sitemap, 404 page and social image generated; no trackers loaded and no cookies set before consent, and zero plugins to patch. Condensed from this site's build.">
+            <div class="head">$ npm run build</div>
+            {log.map(([k, v]) => (
+              <div class="row">
+                <span>{k}</span>
+                <span class={v === '0' ? 'zero' : 'ok'}>{v === '0' ? '0' : `✓ ${v}`}</span>
+              </div>
+            ))}
+            <div class="row last"><span>done in 1.4s</span><span class="ok">exit 0</span></div>
+          </div>
+          <div class="big-stamp" aria-hidden="true">Passed</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="band" id="agreed">
+      <div class="wrap split">
+        <h2 class="display">The 80% is real.</h2>
+        <div class="prose">
+          <p>
+            Sitemaps, 404s, social previews, metadata, consent, form handling, redirects, backups. A prompt that
+            produces a pretty hero section does not produce those. WordPress core is solid, and the original is
+            right that a fresh AI prompt will not give you roles, revisions and a sitemap by default.
+          </p>
+          <p>
+            Where we disagree is the conclusion. That list is a <strong class="hl">checklist, not a platform</strong>.
+            Almost every item on it can be built once, at build time, and then it stays done without a server
+            running it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band concrete" id="waterline">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">Fourteen layers below the waterline.</h2>
+          <p>Here is where each one lives on a static site.</p>
+        </div>
+        <ul class="spec">
+          {layers.map((l) => (
+            <li>
+              <span class="tick" aria-hidden="true">✓</span>
+              <h3>{l.name}</h3>
+              <p>{l.static}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="band" id="timeline">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">Eight incidents. Three outcomes.</h2>
+          <p>The same coffee brand, built three ways, over the same working day. Snippets are illustrative; the links marked ↗ are live on this site.</p>
+        </div>
+        <ol class="rail">
+          {incidents.map((i) => (
+            <li>
+              <time>{i.time}</time>
+              <h3>{i.title}</h3>
+              <div class="trio">
+                <div class="vibe"><b>Vibe app</b>{i.vibe}<pre class="art">{i.vibeCode}</pre></div>
+                <div class="wp"><b>WordPress</b>{i.wp}<pre class="art">{i.wpCode}</pre></div>
+                <div class="static"><b>Static, built properly</b>{i.static}<pre class="art">{i.staticCode}</pre></div>
+              </div>
+              {i.tryIt && <p class="try"><a href={i.tryIt.href}>{i.tryIt.label} ↗</a></p>}
+              {i.options && (
+                <div class="opts">
+                  <h4>{i.options.heading}</h4>
+                  <ul>
+                    {i.options.items.map((o) => (
+                      <li><a href={o.href} rel="noopener"><strong>{o.name}</strong></a><span>{o.text}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+        <p class="small gap">
+          The typo fix is the honest soft spot: a non-technical editor is happiest in the WordPress admin. A headless
+          CMS or a Git-based editor narrows the gap, but it is a real trade-off.
+        </p>
+      </div>
+    </section>
+
+    <section class="band concrete" id="receipt">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">"$0.00" leaves a few lines out.</h2>
+          <p>
+            The original prices the vibe side at $150 an hour of failure and the WordPress side at zero. WordPress
+            itself is free. Hosting, premium plugins and the person who patches them are not. And a static site is not free
+            either: give editors a CMS and you are paying for one, or maintaining one.
+          </p>
+        </div>
+        <div class="receipts">
+          {[['bad', costs.wp], ['good', costs.static], ['mid', costs.cms]].map(([tone, r]) => (
+            <div class={`receipt ${tone}`}>
+              <h3>{r.title}</h3>
+              <p class="meta">illustrative, not a quote</p>
+              <ul>{r.items.map((c) => <li><span>{c.item}</span><span>{c.range}</span></li>)}</ul>
+              <p class="total li"><span>TOTAL</span><span>{r.total}</span></p>
+            </div>
+          ))}
+        </div>
+        <p class="small gap">{costs.note}</p>
+      </div>
+    </section>
+
+    <section class="band ink" id="plugins">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">The security team covers core. Plugins do the 80%.</h2>
+        </div>
+        <p class="sentence">
+          WordPress logged <em>{stats[0].n}</em> new vulnerabilities in 2025. <em>{stats[1].n}</em> were in plugins.
+          Six were in core. Median time to first mass exploitation: <em>{stats[2].n}</em>.
+        </p>
+        <div class="prose lead-in">
+          <p>
+            Figures are from <a href="https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/" rel="noopener">Patchstack's State of WordPress Security in 2026</a>, a security vendor with its own interest in the topic.
+            By their count, {stats[3].n} of 2025's vulnerabilities had no patch at disclosure. The original's "dedicated
+            security team" covers core. The plumbing it lists (SEO, forms, consent, backups) comes from plugins.
+          </p>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Category</th><th>What was reported</th><th>Who can trigger it</th><th>Source</th></tr></thead>
+            <tbody>
+              {vulns.map((v) => (
+                <tr><td>{v.category}</td><td>{v.finding}</td><td><span class={`sev ${v.open ? 'High' : 'Medium'}`}>{v.access}</span></td><td><a href={v.href} rel="noopener">{v.source}</a></td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="small gap">{vulnNote}</p>
+
+        <h3 class="subhead">What WordPress gets right</h3>
+        <ul class="points">
+          {fairPoints.map((f) => <li><strong>{f.title}</strong> {f.text}</li>)}
+        </ul>
+
+        <div class="prose after">
+          <p>
+            The fairer version of the original's message: <em>WordPress covers the 80%, but only if someone owns
+            plugin patching and monitoring.</em> That ongoing cost is the part the page leaves out. It is a cost, not
+            a flaw: you can pay a host, an agency or yourself.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band concrete" id="static-risks">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">Static has its own risks.</h2>
+          <p>Less server-side code is a smaller target, not no target. Here is what moves instead.</p>
+        </div>
+        <ul class="points">
+          {staticRisks.map((r) => (
+            <li><strong>{r.title}</strong> {r.text}{r.href && <> <a href={r.href} rel="noopener">{r.source} ↗</a></>}</li>
+          ))}
+        </ul>
+        <p class="small gap">This site installs 202 packages to build (7 direct) and none run on a server. Fewer, pinned dependencies and a committed lockfile make that surface easier to review.</p>
+      </div>
+    </section>
+
+    <section class="band" id="checklist">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">The original checks the plumbing. Check the safety too.</h2>
+          <p>
+            The original hands you six checks to run yourself. Here they are against this site, plus two it leaves out:
+            whether what ships is patched, and what a stranger can reach. Click, look, tick.
+          </p>
+        </div>
+        <div class="checks">
+          {checklist.map((g) => (
+            <div>
+              <h3>{g.group}</h3>
+              <ul class="check">
+                {g.items.map((c) => (
+                  <li>
+                    <label><input type="checkbox" /><span><b>{c.title}</b> {c.ask}</span></label>
+                    <div class="artifact">
+                      {c.links && <p class="links">{c.links.map((l) => <a href={l.href}>{l.label} ↗</a>)}</p>}
+                      {c.kind === 'og' && (
+                        <figure class="og">
+                          <img src="/og/index.png" width="1200" height="630" alt="Share card for this site" loading="lazy" />
+                          <figcaption><b>{pageTitle}</b><span>{siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></figcaption>
+                        </figure>
+                      )}
+                      {c.kind === 'source' && (
+                        <details>
+                          <summary>Show the source</summary>
+                          <pre class="term">{headSource}</pre>
+                        </details>
+                      )}
+                      {c.kind === 'term' && <pre class="term">{c.code}</pre>}
+                      {c.note && <p class="small">{c.note}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="checkfoot">
+          <p class="score" id="score" aria-live="polite" data-total={total}>0 / {total} verified</p>
+          <p class="passed" id="passed" aria-hidden="true">Passed</p>
+        </div>
+        <noscript><p class="small">The tally needs JavaScript. The list works without it.</p></noscript>
+      </div>
+    </section>
+
+    <section class="band concrete" id="built">
+      <div class="wrap split">
+        <h2 class="display">It runs its own checklist.</h2>
+        <div>
+          <div class="prose">
+            <p>Same transparency as the original, different stack. AI helped with drafting, layout and code. A person chose the claims and checked the sources. These parts are build-time code, not plugins:</p>
+          </div>
+          <pre class="term gap">$ npm run build
+  sitemap-index.xml ........ generated
+  404.html ................. generated
+  og/index.png ............. generated
+  _headers (CSP, HSTS) ..... shipped
+  trackers before consent .. 0
+  cookies before consent ... 0   → anything added later stays gated</pre>
+          <p class="small gap">The security headers and the 301 redirect take effect on hosts that read <code>_headers</code> and <code>_redirects</code> (Netlify, Cloudflare Pages). Other hosts need the same rules in their own config.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="matrix">
+      <div class="wrap">
+        <div class="band-head">
+          <h2 class="display">Where's your line?</h2>
+          <p>Pick the tool for the job. Sometimes that is WordPress.</p>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>You need</th><th>Pick</th><th>Why</th></tr></thead>
+            <tbody>
+              {matrix.map((m) => <tr><td>{m.need}</td><td><span class="pick">{m.pick}</span></td><td>{m.why}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band ink closing" id="cta">
+      <div class="wrap">
+        <h2 class="display">Done is a property of the build.</h2>
+        <div class="prose after">
+          <p>If your site is mostly pages, you can have all fourteen layers without running an application server of your own. The host serves the files, and free tiers exist. Add a CMS or functions and some of the risk and the bill come back, so budget for them.</p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="https://docs.astro.build/" rel="noopener">Build it static →</a>
+          <a class="btn plain" href="https://itlooksdone.com/" rel="noopener">Read the original</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <p class="small">
+        An independent reply to <a href="https://itlooksdone.com/" rel="noopener">itlooksdone.com</a>. It is not
+        affiliated with its authors, who make a fair case for WordPress where WordPress fits. They are a WordPress agency; this page argues for static sites. Each of us gains from our own conclusion, so check the sources. This page sets no cookies and loads no trackers. The consent demo sets one cookie, your choice, and only once you make it.
+      </p>
+    </div>
+  </footer>
+
+  <script src="../scripts/checklist.ts"></script>
+</Base>

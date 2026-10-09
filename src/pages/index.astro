@@ -245,7 +245,7 @@ const headSource = [
           <h2 class="display">The original checks the plumbing. Check the safety too.</h2>
           <p>
             The original hands you six checks to run yourself. Here they are against this site, plus two it leaves out:
-            whether what ships is patched, and what a stranger can reach. Click, look, tick.
+            whether what ships is patched, and what a stranger can reach. Open an example and its box ticks itself.
           </p>
         </div>
         <div class="checks">
@@ -260,7 +260,7 @@ const headSource = [
                       {c.links && <p class="links">{c.links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label} ↗<span class="sr-only"> (opens in a new tab)</span></a>)}</p>}
                       {c.kind === 'og' && (
                         <figure class="og">
-                          <img src="/og/index.png" width="1200" height="630" alt="Share card for this site" loading="lazy" />
+                          <a href="/og/index.png" target="_blank" rel="noopener" aria-label="Open the share image, opens in a new tab"><img src="/og/index.png" width="1200" height="630" alt="Share card for this site" loading="lazy" /></a>
                           <figcaption><b>{pageTitle}</b><span>{siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></figcaption>
                         </figure>
                       )}

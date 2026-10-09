@@ -232,6 +232,7 @@ code { font-family: var(--mono); font-size: 0.9em; color: var(--lav); }
 /* closing */
 .closing { background: radial-gradient(90% 120% at 50% 120%, #3a2a78, var(--night-0) 70%); }
 .closing .wrap { text-align: center; }
+.closing h2 em { color: var(--moon); }
 .closing h2 { max-width: 18ch; margin-inline: auto; font-size: clamp(2.6rem, 7vw, 5.4rem); color: #fff; }
 .closing .prose p { margin-inline: auto; }
 

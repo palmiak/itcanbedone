@@ -15,6 +15,10 @@ import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource-variable/inter-tight/index.css';
 import '@fontsource-variable/jetbrains-mono/index.css';
 import '../styles/global.css';
+import serif from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+import serifItalic from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+import inter from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+const heroFonts = [serif, serifItalic, inter];
 ---
 <!doctype html>
 <html lang="en">
@@ -23,6 +27,7 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {heroFonts.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />

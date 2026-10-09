@@ -83,7 +83,7 @@ export const incidents: Incident[] = [
     time: '2:20 PM', title: 'A visitor arrives from Berlin',
     vibe: 'Trackers load before anyone has said yes.', wp: 'Both scripts wait for consent.', static: 'Nothing loads by default. If marketing wants trackers, a consent library gates them.',
     vibeCode: 'gtag.js loaded · consent: none\npixel.js loaded · consent: none', wpCode: 'gtag.js → awaiting consent\npixel.js → awaiting consent', staticCode: 'analytics.js blocked · consent: none\n← unlocks only on "Accept"',
-    note: 'On WordPress this is typically a consent plugin. Complianz appears in the vulnerability table further down.',
+    note: 'On WordPress this is typically a consent plugin, which is one more plugin to keep patched.',
     tryIt: { label: 'Open the consent + tracking demo', href: '/demo/consent' },
     options: {
       heading: 'Most businesses will want a banner, and Astro has no built-in one',
@@ -105,7 +105,7 @@ export const incidents: Incident[] = [
     time: '4:58 PM', title: 'A security advisory drops. It\'s Friday',
     vibe: 'A dependency you did not know you had is vulnerable.', wp: 'The security release is applied automatically.', static: 'The host serves files; there is no application server of yours to exploit. Build-time dependencies still need updating, and a self-hosted CMS or serverless functions would add some risk back.',
     vibeCode: '$ npm audit\n3 high · 1 critical', wpCode: 'security release applied\n5:03 PM · no action needed', staticCode: '$ npm audit\nfound 0 vulnerabilities\n← this site, when built',
-    note: 'The original\'s "no action needed" holds for core. Plugin vulnerabilities are a separate question: see the table below.',
+    note: 'The original\'s "no action needed" holds for core on sites with automatic updates on. Plugin vulnerabilities are a separate question: see the table below.',
   },
 ];
 
@@ -158,12 +158,12 @@ export const vulns: Vuln[] = [
 ];
 
 export const wpSupply = [
-  { title: 'EssentialPlugin, 2025 to 2026.', text: 'The vendor sold its plugin portfolio on Flippa in 2025. The buyer planted a backdoor around September 2025 and activated it on 5 April 2026, which let it write arbitrary files on affected sites. Patchstack counts 20+ plugins. WordPress.org closed the plugins and pushed a forced security update.', href: 'https://patchstack.com/articles/critical-supply-chain-compromise-on-20-plugins-by-essentialplugin/', source: 'Patchstack' },
-  { title: 'ShapedPlugin Pro, June 2026.', text: 'Backdoored builds of three Pro plugins were shipped through the vendor\'s own compromised update pipeline (CVE-2026-10735, CVSS 9.8). The malicious code could capture admin credentials and two-factor codes. The vendor pulled the builds and released clean versions, and the free WordPress.org versions were not affected.', href: 'https://wpscan.com/vulnerability/160ee7f7-91b6-4cce-9462-837130621402/', source: 'WPScan' },
+  { title: 'EssentialPlugin, 2025 to 2026.', text: 'The vendor sold its plugin portfolio on Flippa in 2025. The buyer\'s first commit planted a backdoor in September 2025, and it was first used on 5 April 2026, which let it write arbitrary files on affected sites. Patchstack counts 20+ plugins. WordPress.org closed the plugins and pushed a forced security update.', href: 'https://patchstack.com/articles/critical-supply-chain-compromise-on-20-plugins-by-essentialplugin/', source: 'Patchstack' },
+  { title: 'Smart Slider 3 Pro, April 2026.', text: 'An unauthorized party got into the vendor\'s update infrastructure and shipped a backdoored build, 3.5.1.35, through the official update channel. It was available for about six hours, and sites that updated received a remote access toolkit, including a hidden administrator account. The free version on WordPress.org was not affected.', href: 'https://patchstack.com/articles/critical-supply-chain-compromise-in-smart-slider-3-pro-full-malware-analysis/', source: 'Patchstack' },
 ];
 
 export const fairPoints = [
-  { title: 'Core was solid in 2025. 2026 has been different.', text: 'Patchstack counted six core vulnerabilities in 2025, all low priority. In 2026 came wp2shell in July. The core team still shipped the fix through forced auto-updates within days. That response is what the "dedicated security team" claim is worth, and it is real.' },
+  { title: 'Core was solid in 2025. 2026 has been different.', text: 'Patchstack counted six core vulnerabilities in 2025, all low priority. In 2026 came wp2shell in July, and in September WordPress 7.1.1 patched 11 security issues, including an unauthenticated stored XSS in wpautop(). The core team still pushed the wp2shell fix out within days, as forced updates on sites with auto-updates enabled. That response is what the "dedicated security team" claim is worth, and it is real.' },
 { title: 'Patches exist.', text: 'Every one of these has a fixed release, and a site that applied it is fine. The Rank Math one also needs an Author account to exploit.' },
   { title: 'Core updates itself.', text: 'Minor security releases apply automatically. Plugin and theme auto-updates are opt-in, though many hosts turn them on, and since WordPress 6.6 an update that fatals the homepage is rolled back.' },
   { title: 'A managed host changes the picture.', text: 'With a host that patches plugins and monitors the site, much of the cost above becomes someone else\'s job. That is a real service, and it costs money.' },

@@ -25,7 +25,7 @@ export const questions: Question[] = [
     { value: 'daily', label: 'Many times a day', scores: { wp: 3, platform: 1, cms: 1 }, why: { wp: 'Frequent publishing is what a CMS-first platform is built for.', platform: 'Constant change favours a live system.', cms: 'Frequent changes need a CMS and quick builds.' } },
   ] },
   { id: 'owner', title: 'Who owns updates and security after launch?', options: [
-    { value: 'nobody', label: 'Nobody, honestly', scores: { static: 3, wp: -3, cms: -1, platform: -1 }, why: { static: 'With no owner, less to patch matters most. Static files do not decay the way plugins do.' } },
+    { value: 'nobody', label: 'Nobody, honestly', scores: { static: 3, wp: -3, cms: -1, platform: -1 }, why: { static: 'With no owner, less to patch matters most. Static files decay more slowly than plugins do.' } },
     { value: 'host', label: 'A host or an agency, on a plan', scores: { wp: 1 }, why: { wp: 'A managed host or agency covers plugin patching and monitoring.', platform: 'A host or agency can own the updates.', cms: 'A host or agency can own the updates.', static: 'A host patches its own platform.' } },
     { value: 'me', label: 'Me or my own team', scores: { static: 1 }, why: { static: 'You can own a small toolchain, and the build is easy to reason about.', wp: 'You can own plugin patching if you plan for it.', cms: 'You can own the build and the CMS.', platform: 'You can own the stack if you plan for it.' } },
   ] },

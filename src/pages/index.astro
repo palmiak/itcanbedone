@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { layers, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
+import { layerGroups, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
 
 const log = [
   ['sitemap-index.xml', 'generated'],
@@ -36,27 +36,22 @@ const headSource = [
 
   <main id="main">
     <header class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <h1 class="display">It's done<span class="stop">.</span></h1>
-          <p class="sub">Same site. Same Tuesday. Almost nothing to patch.</p>
-          <p class="lede">
-            The original page is right about a lot: a screenshot is not a launch. But it compares a vibe-coded app
-            with WordPress and stops there. There is a third option, and it has been done since the build finished.
-          </p>
-          <div class="actions">
-            <a class="btn" href="#timeline">Run the same day →</a>
-            <a class="btn plain" href="#checklist">What's actually checked?</a>
-          </div>
-          <aside class="notice" aria-label="Privacy note">
-            <strong>Nothing loads before you say so.</strong>
-            <p>
-              This page runs no analytics and sets no cookies, so it shows no banner. That is a choice, not a
-              static-site default: the day marketing adds a tracker, a consent banner is a small library, and
-              the tracker stays blocked until a visitor accepts.
-            </p>
-            <p class="notice-link"><a href="/demo/consent">See a working one ↗</a></p>
-          </aside>
+      <div class="sky" aria-hidden="true">
+        <span class="stars s1"></span><span class="stars s2"></span><span class="stars s3"></span>
+        <i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i>
+        <i class="moon"></i>
+      </div>
+      <div class="wrap">
+        <p class="eyebrow">A reply, after dark</p>
+        <h1 class="display">It's <em>done</em>.<span class="check-badge" aria-hidden="true">✓</span></h1>
+        <p class="sub">Same site. Same Tuesday. Almost nothing to patch.</p>
+        <p class="lede">
+          The original page is right about a lot: a screenshot is not a launch. But it compares a vibe-coded app
+          with WordPress and stops there. There is a third option, and it has been done since the build finished.
+        </p>
+        <div class="actions">
+          <a class="btn" href="#timeline">Run the same day →</a>
+          <a class="btn plain" href="#checklist">What's actually checked?</a>
         </div>
 
         <div class="log-wrap">
@@ -72,6 +67,7 @@ const headSource = [
           </div>
           <div class="big-stamp" aria-hidden="true">Passed</div>
         </div>
+
       </div>
     </header>
 
@@ -81,7 +77,7 @@ const headSource = [
         <div class="prose">
           <p>
             Sitemaps, 404s, social previews, metadata, consent, form handling, redirects, backups. A prompt that
-            produces a pretty hero section does not produce those. WordPress core is solid, and the original is
+            produces a pretty hero section does not produce those. WordPress core is well maintained, and the original is
             right that a fresh AI prompt will not give you roles, revisions and a sitemap by default.
           </p>
           <p>
@@ -97,17 +93,29 @@ const headSource = [
       <div class="wrap">
         <div class="band-head">
           <h2 class="display">Fourteen layers below the waterline.</h2>
-          <p>Here is where each one lives on a static site.</p>
+          <p>The same fourteen the original lists, in its four groups. Here is where each one lives on a static site, what skipping it costs, and where a static site has to rent something.</p>
         </div>
-        <ul class="spec">
-          {layers.map((l) => (
-            <li>
-              <span class="tick" aria-hidden="true">✓</span>
-              <h3>{l.name}</h3>
-              <p>{l.static}</p>
-            </li>
+        <div class="groups">
+          {layerGroups.map((g) => (
+            <div class="group">
+              <div class="group-head">
+                <h3>{g.name}</h3>
+                <span class={`cost ${g.cost}`}>Cost to miss: {g.cost}</span>
+              </div>
+              <ul class="boxes">
+                {g.layers.map((l) => (
+                  <li class="box">
+                    <h4>{l.name}</h4>
+                    <p>{l.static}</p>
+                    <p class="without"><b>Without it:</b> {l.without}</p>
+                    {l.needs && <p class="needs"><b>Needs:</b> {l.needs}</p>}
+                    {l.tryIt && <p class="try"><a href={l.tryIt.href} target="_blank" rel="noopener">{l.tryIt.label} ↗<span class="sr-only"> (opens in a new tab)</span></a></p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
 
@@ -127,13 +135,13 @@ const headSource = [
                 <div class="wp"><b>WordPress</b>{i.wp}<pre class="art">{i.wpCode}</pre></div>
                 <div class="static"><b>Static, built properly</b>{i.static}<pre class="art">{i.staticCode}</pre></div>
               </div>
-              {i.tryIt && <p class="try"><a href={i.tryIt.href}>{i.tryIt.label} ↗</a></p>}
+              {i.tryIt && <p class="try"><a href={i.tryIt.href} target="_blank" rel="noopener">{i.tryIt.label} ↗<span class="sr-only"> (opens in a new tab)</span></a></p>}
               {i.options && (
                 <div class="opts">
                   <h4>{i.options.heading}</h4>
                   <ul>
                     {i.options.items.map((o) => (
-                      <li><a href={o.href} rel="noopener"><strong>{o.name}</strong></a><span>{o.text}</span></li>
+                      <li><a href={o.href} target="_blank" rel="noopener"><strong>{o.name}</strong><span class="sr-only"> (opens in a new tab)</span></a><span>{o.text}</span></li>
                     ))}
                   </ul>
                 </div>
@@ -183,7 +191,7 @@ const headSource = [
         </p>
         <div class="prose lead-in">
           <p>
-            Figures are from <a href="https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/" rel="noopener">Patchstack's State of WordPress Security in 2026</a>, a security vendor with its own interest in the topic.
+            Figures are from <a href="https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/" target="_blank" rel="noopener">Patchstack's State of WordPress Security in 2026<span class="sr-only"> (opens in a new tab)</span></a>, a security vendor with its own interest in the topic.
             By their count, {stats[3].n} of 2025's vulnerabilities had no patch at disclosure. The original's "dedicated
             security team" covers core. The plumbing it lists (SEO, forms, consent, backups) comes from plugins.
           </p>
@@ -193,7 +201,7 @@ const headSource = [
             <thead><tr><th>Category</th><th>What was reported</th><th>Who can trigger it</th><th>Source</th></tr></thead>
             <tbody>
               {vulns.map((v) => (
-                <tr><td>{v.category}</td><td>{v.finding}</td><td><span class={`sev ${v.open ? 'High' : 'Medium'}`}>{v.access}</span></td><td><a href={v.href} rel="noopener">{v.source}</a></td></tr>
+                <tr><td>{v.category}</td><td>{v.finding}</td><td><span class={`sev ${v.open ? 'High' : 'Medium'}`}>{v.access}</span></td><td><a href={v.href} target="_blank" rel="noopener">{v.source}<span class="sr-only"> (opens in a new tab)</span></a></td></tr>
               ))}
             </tbody>
           </table>
@@ -223,7 +231,7 @@ const headSource = [
         </div>
         <ul class="points">
           {staticRisks.map((r) => (
-            <li><strong>{r.title}</strong> {r.text}{r.href && <> <a href={r.href} rel="noopener">{r.source} ↗</a></>}</li>
+            <li><strong>{r.title}</strong> {r.text}{r.href && <> <a href={r.href} target="_blank" rel="noopener">{r.source} ↗<span class="sr-only"> (opens in a new tab)</span></a></>}</li>
           ))}
         </ul>
         <p class="small gap">This site installs 202 packages to build (7 direct) and none run on a server. Fewer, pinned dependencies and a committed lockfile make that surface easier to review.</p>
@@ -248,7 +256,7 @@ const headSource = [
                   <li>
                     <label><input type="checkbox" /><span><b>{c.title}</b> {c.ask}</span></label>
                     <div class="artifact">
-                      {c.links && <p class="links">{c.links.map((l) => <a href={l.href}>{l.label} ↗</a>)}</p>}
+                      {c.links && <p class="links">{c.links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label} ↗<span class="sr-only"> (opens in a new tab)</span></a>)}</p>}
                       {c.kind === 'og' && (
                         <figure class="og">
                           <img src="/og/index.png" width="1200" height="630" alt="Share card for this site" loading="lazy" />
@@ -321,8 +329,8 @@ const headSource = [
           <p>If your site is mostly pages, you can have all fourteen layers without running an application server of your own. The host serves the files, and free tiers exist. Add a CMS or functions and some of the risk and the bill come back, so budget for them.</p>
         </div>
         <div class="actions">
-          <a class="btn" href="https://docs.astro.build/" rel="noopener">Build it static →</a>
-          <a class="btn plain" href="https://itlooksdone.com/" rel="noopener">Read the original</a>
+          <a class="btn" href="https://docs.astro.build/" target="_blank" rel="noopener">Build it static →<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn plain" href="https://itlooksdone.com/" target="_blank" rel="noopener">Read the original<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
       </div>
     </section>
@@ -330,10 +338,26 @@ const headSource = [
 
   <footer class="site">
     <div class="wrap">
-      <p class="small">
-        An independent reply to <a href="https://itlooksdone.com/" rel="noopener">itlooksdone.com</a>. It is not
-        affiliated with its authors, who make a fair case for WordPress where WordPress fits. They are a WordPress agency; this page argues for static sites. Each of us gains from our own conclusion, so check the sources. This page sets no cookies and loads no trackers. The consent demo sets one cookie, your choice, and only once you make it.
-      </p>
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
+          <p class="small">An independent reply to <a href="https://itlooksdone.com/" target="_blank" rel="noopener">itlooksdone.com<span class="sr-only"> (opens in a new tab)</span></a>. Not affiliated with its authors.</p>
+        </div>
+        <div>
+          <h3>Who gains from what</h3>
+          <p class="small">
+            The original is published by a WordPress agency, and it makes a fair case for WordPress where WordPress
+            fits. This page argues for static sites. Each of us gains from our own conclusion, so check the sources.
+          </p>
+        </div>
+        <div>
+          <h3>Privacy</h3>
+          <p class="small">
+            This page sets no cookies and loads no trackers. The <a href="/demo/consent">consent demo</a> sets one
+            cookie, your choice, and only once you make it.
+          </p>
+        </div>
+      </div>
     </div>
   </footer>
 

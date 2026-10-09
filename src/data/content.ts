@@ -1,18 +1,30 @@
-export const layers = [
-  { name: 'Sitemap', static: 'One integration line. Regenerated on every build, so it can never go stale.' },
-  { name: 'Social previews (OG)', static: 'Generated at build time from the page title. No plugin, no runtime image service.' },
-  { name: 'Meta, canonical, JSON-LD', static: 'Live in one layout file. Every page inherits them; a missing title fails the build.' },
-  { name: '404 page', static: 'A file called 404.astro.' },
-  { name: 'Redirects', static: 'A plain-text rules file at the host edge. Fast, versioned, reviewable in a diff.' },
-  { name: 'Security headers', static: 'CSP, HSTS and friends in a _headers file. No PHP, no database, no login page to attack.' },
-  { name: 'Images', static: 'Resized, converted to AVIF/WebP and given width/height at build time.' },
-  { name: 'Accessibility', static: 'Semantic HTML plus axe/pa11y in CI. Fails the build, not the user.' },
-  { name: 'Consent & privacy', static: 'A consent banner is a small open-source library, not a platform. Astro has no built-in one, but a ready integration exists, and trackers stay blocked until a visitor accepts. Live demo below.' },
-  { name: 'Forms & spam', static: 'A host-level form service (Netlify Forms, for one), or a serverless function behind a bot check. No form plugin on your own server.' },
-  { name: 'Editorial workflow', static: 'Markdown in git (pull requests are your revisions). Non-technical editors need a headless CMS, which is a subscription, or a server you maintain if you self-host it.' },
-  { name: 'Backups', static: 'The site is a git repo plus a build. Restoring means redeploying.' },
-  { name: 'Dependency risk', static: 'Build-time only. A vulnerable package cannot be hit by visitors because it is not running in production.' },
-  { name: 'Uptime & scale', static: 'Files on a CDN. A front-page mention is a non-event.' },
+export type Layer = { name: string; static: string; without: string; needs?: string; tryIt?: { label: string; href: string } };
+export type LayerGroup = { name: string; cost: 'low' | 'medium' | 'high' | 'existential'; layers: Layer[] };
+
+// Same fourteen layers, in the original's four groups. "Cost to miss" ratings are our judgement.
+export const layerGroups: LayerGroup[] = [
+  { name: 'Getting found', cost: 'medium', layers: [
+    { name: 'SEO foundations', static: 'Sitemap, meta tags, canonical and JSON-LD come from one layout file and the build. A missing title fails the build.', without: 'Pages search engines cannot read, rank or index properly.', tryIt: { label: 'Open the sitemap', href: '/sitemap-index.xml' } },
+    { name: 'Social share previews', static: 'An Open Graph image is rendered at build time for every page. No plugin, no runtime image service.', without: 'A grey box when the link is pasted into Slack or LinkedIn.', tryIt: { label: 'Open the share image', href: '/og/index.png' } },
+    { name: 'Redirects & 404s', static: 'A plain-text redirects file at the host edge, plus a 404 page that is just a file. Versioned and reviewable in a diff.', without: 'Broken links, lost traffic and a blank page for a mistyped URL.', tryIt: { label: 'Try /prodcuts', href: '/prodcuts' } },
+  ]},
+  { name: 'Running the site', cost: 'medium', layers: [
+    { name: 'Editorial workflow', static: 'Markdown in git, where pull requests are your revisions. Non-technical editors need a headless CMS.', without: 'Every typo becomes a developer ticket.', needs: 'A CMS: a subscription, or a server you maintain' },
+    { name: 'Roles & permissions', static: 'A static site has no users. Who can publish is set in your Git host and, if you add one, your CMS.', without: 'Everyone, or nobody, can publish.', needs: 'Git host and CMS settings' },
+    { name: 'Media pipeline', static: 'Images are resized, converted to AVIF or WebP and given dimensions at build time.', without: 'A 14 MB hero photo and a slow page.' },
+    { name: 'Forms & lead capture', static: 'A host-level form service such as Netlify Forms, or a serverless function behind a bot check.', without: 'A flooded inbox, or leads that vanish.', needs: 'A form service or a function', tryIt: { label: 'Try the form', href: '/demo/form' } },
+  ]},
+  { name: 'Managing risk', cost: 'high', layers: [
+    { name: 'Security patching', static: 'The host patches its platform. You update build-time dependencies in a pull request and run the audit. No application server of your own to exploit.', without: 'Known holes stay open, and mass exploitation can arrive within hours.', tryIt: { label: 'Knock on /wp-login.php', href: '/wp-login.php' } },
+    { name: 'Accessibility', static: 'Semantic HTML plus axe or pa11y in CI, so a regression fails the build instead of reaching users.', without: 'Visitors are locked out, and there is legal exposure.' },
+    { name: 'Privacy & consent', static: 'A small open-source consent library gates trackers until a visitor accepts. Astro has no built-in one, but an integration exists.', without: 'Trackers load before anyone has said yes.', needs: 'A consent library, or a hosted platform', tryIt: { label: 'Try the consent demo', href: '/demo/consent' } },
+    { name: 'Backups & rollback', static: 'The site is a git repo plus a build, and most hosts keep earlier deploys, so rollback is a click.', without: 'No way back from a bad release.', needs: 'Separate backups for any SaaS CMS content' },
+  ]},
+  { name: 'Staying alive', cost: 'existential', layers: [
+    { name: 'Maintainability', static: 'A lockfile, pinned dependencies and a build in CI. Someone still has to bump the dependencies.', without: 'Nobody can change the site safely.' },
+    { name: 'Integrations', static: 'APIs are called at build time, from the browser, or through a function. Each one is another company\'s software.', without: 'CRM, newsletter and analytics are disconnected.', needs: 'Each integration is a dependency' },
+    { name: 'Scale & uptime', static: 'Plain files on a CDN. A front-page mention is a non-event.', without: 'A traffic spike takes the site down.' },
+  ]},
 ];
 
 export type Option = { name: string; text: string; href: string };

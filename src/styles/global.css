@@ -66,8 +66,8 @@ strong { font-weight: 600; color: #fff; }
 .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding-block: 0.85rem; flex-wrap: wrap; }
 .logo { font: 400 1.6rem/1 var(--serif); letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #fff; }
 .logo:hover { color: #fff; }
-.mini-stamp { font-size: 0; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--badge); display: inline-grid; place-items: center; }
-.mini-stamp::before { content: '✓'; font: 700 0.8rem/1 var(--sans); color: #fff; }
+.mini-stamp { font-size: 0; flex: none; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--badge); display: inline-grid; place-items: center; }
+.mini-stamp::before { content: ''; width: 0.3rem; height: 0.58rem; border: solid #fff; border-width: 0 2px 2px 0; transform: translate(0.01rem, 0.133rem) rotate(45deg); }
 .bar .by { font: 500 0.78rem var(--mono); color: var(--muted); text-decoration: none; }
 a.by:hover { color: #fff; }
 

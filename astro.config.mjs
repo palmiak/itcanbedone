@@ -2,9 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: replace with the real domain before deploying.
 export default defineConfig({
-  site: 'https://itsdone.example',
+  site: 'https://looksdoneisdone.netlify.app',
   integrations: [sitemap()],
   // Local stand-in for the host-level 301 in public/_redirects.
   redirects: { '/prodcuts': '/' },

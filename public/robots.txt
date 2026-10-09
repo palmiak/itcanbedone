@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://itsdone.example/sitemap-index.xml
+Sitemap: https://looksdoneisdone.netlify.app/sitemap-index.xml

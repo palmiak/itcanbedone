@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { layers, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
+import { layerGroups, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
 
 const log = [
   ['sitemap-index.xml', 'generated'],
@@ -93,17 +93,29 @@ const headSource = [
       <div class="wrap">
         <div class="band-head">
           <h2 class="display">Fourteen layers below the waterline.</h2>
-          <p>Here is where each one lives on a static site.</p>
+          <p>The same fourteen the original lists, in its four groups. Here is where each one lives on a static site, what skipping it costs, and where a static site has to rent something.</p>
         </div>
-        <ul class="spec">
-          {layers.map((l) => (
-            <li>
-              <span class="tick" aria-hidden="true">✓</span>
-              <h3>{l.name}</h3>
-              <p>{l.static}</p>
-            </li>
+        <div class="groups">
+          {layerGroups.map((g) => (
+            <div class="group">
+              <div class="group-head">
+                <h3>{g.name}</h3>
+                <span class={`cost ${g.cost}`}>Cost to miss: {g.cost}</span>
+              </div>
+              <ul class="boxes">
+                {g.layers.map((l) => (
+                  <li class="box">
+                    <h4>{l.name}</h4>
+                    <p>{l.static}</p>
+                    <p class="without"><b>Without it:</b> {l.without}</p>
+                    {l.needs && <p class="needs"><b>Needs:</b> {l.needs}</p>}
+                    {l.tryIt && <p class="try"><a href={l.tryIt.href}>{l.tryIt.label} ↗</a></p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
 

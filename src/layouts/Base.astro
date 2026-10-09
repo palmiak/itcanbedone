@@ -3,13 +3,30 @@ interface Props { title: string; description: string; ogPath?: string; noindex?:
 const { title, description, ogPath = 'index', noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${ogPath}.png`, Astro.site);
-const jsonLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: "Looks Done. Is Done.",
-  url: Astro.site?.toString(),
-  description,
-});
+const siteName = 'Looks Done. Is Done.';
+const origin = Astro.site?.toString() ?? '';
+const isHome = Astro.url.pathname === '/';
+const pageName = title.split(' | ')[0];
+const jsonLd = JSON.stringify(isHome
+  ? { '@context': 'https://schema.org', '@type': 'WebSite', name: siteName, url: origin, description, inLanguage: 'en' }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: pageName,
+      url: canonical.href,
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@type': 'WebSite', name: siteName, url: origin },
+      primaryImageOfPage: ogImage.href,
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: siteName, item: origin },
+          { '@type': 'ListItem', position: 2, name: pageName, item: canonical.href },
+        ],
+      },
+    });
+const ogAlt = `${pageName}: ${siteName}`;
 import '@fontsource/instrument-serif/400.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource-variable/inter-tight/index.css';
@@ -29,18 +46,27 @@ const heroFonts = [serif, serifItalic, inter, mono];
     <title>{title}</title>
     <meta name="description" content={description} />
     {heroFonts.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogAlt} />
     <script type="application/ld+json" set:html={jsonLd} is:inline></script>
   </head>
   <body>

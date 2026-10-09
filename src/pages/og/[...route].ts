@@ -9,6 +9,14 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       title: 'Looks done.\nIs done.',
       description: 'Same site. Same Tuesday. Almost nothing to patch.',
     },
+    form: {
+      title: 'Forms,\nthen bots.',
+      description: 'Submit it empty, then play the bot. A honeypot catches what the browser lets through.',
+    },
+    consent: {
+      title: 'Consent,\nthen tracking.',
+      description: 'The tracker stays blocked until you say yes. A working consent banner on a static page.',
+    },
   },
   getImageOptions: (_path, page) => ({
     title: page.title,

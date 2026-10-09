@@ -244,8 +244,8 @@ const headSource = [
         <div class="band-head">
           <h2 class="display">The original checks the plumbing. Check the safety too.</h2>
           <p>
-            The original hands you six checks to run yourself. Here they are against this site, plus two it leaves out:
-            whether what ships is patched, and what a stranger can reach. Open an example and its box ticks itself.
+            The original hands you six checks to run yourself. Here they are against this site, plus three it leaves out:
+            whether what ships is patched, whether it is accessible, and what a stranger can reach. Open an example and its box ticks itself.
           </p>
         </div>
         <div class="checks">
@@ -270,7 +270,12 @@ const headSource = [
                           <pre class="term">{headSource}</pre>
                         </details>
                       )}
-                      {c.kind === 'term' && <pre class="term">{c.code}</pre>}
+                      {c.kind === 'term' && (
+                        <details>
+                          <summary>Show the output</summary>
+                          <pre class="term">{c.code}</pre>
+                        </details>
+                      )}
                       {c.note && <p class="small">{c.note}</p>}
                     </div>
                   </li>

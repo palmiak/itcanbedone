@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { layerGroups, incidents, costs, vulns, vulnNote, wpSupply, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
+import { questions, results, priority, outcomeNames } from '../data/line';
+import { layerGroups, incidents, costs, vulns, vulnNote, wpSupply, fairPoints, staticRisks, stats, checklist } from '../data/content';
 
 const log = [
   ['sitemap-index.xml', 'generated'],
@@ -12,6 +13,7 @@ const log = [
   ['cookies set before consent', '0'],
   ['plugins to patch', '0'],
 ];
+const lineData = JSON.stringify({ questions, priority, results, names: outcomeNames });
 const total = checklist.reduce((n, g) => n + g.items.length, 0);
 const pageTitle = "It's Done. A static site, built properly.";
 const pageDescription = 'A fair reply to "It Looks Done". The invisible 80% is real. It just does not require WordPress, and it does not require a plugin stack to patch.';
@@ -331,16 +333,26 @@ const headSource = [
       <div class="wrap">
         <div class="band-head">
           <h2 class="display">Where's your line?</h2>
-          <p>Pick the tool for the job. Sometimes that is WordPress.</p>
+          <p>Five quick questions. It is a nudge, not a verdict: it only knows what you tell it. Sometimes the answer is WordPress.</p>
         </div>
-        <div class="tablewrap" tabindex="0" role="region" aria-label="Which tool for which job, scrolls sideways on small screens">
-          <table>
-            <thead><tr><th>You need</th><th>Pick</th><th>Why</th></tr></thead>
-            <tbody>
-              {matrix.map((m) => <tr><td>{m.need}</td><td><span class="pick">{m.pick}</span></td><td>{m.why}</td></tr>)}
-            </tbody>
-          </table>
-        </div>
+
+        <form class="quiz" id="line-quiz" hidden>
+          {questions.map((q, qi) => (
+            <fieldset class="q">
+              <legend><span class="qn">{qi + 1}</span> {q.title}</legend>
+              <div class="choices">
+                {q.options.map((o) => (
+                  <label class="choice"><input type="radio" name={q.id} value={o.value} /><span>{o.label}</span></label>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+          <p class="small quiz-progress" id="quiz-progress" aria-live="polite">0 of {questions.length} answered</p>
+        </form>
+        <div class="quiz-result" id="quiz-result" aria-live="polite" tabindex="-1" hidden></div>
+        <script type="application/json" id="line-data" is:inline set:html={lineData}></script>
+
+        <noscript><p class="small">The quiz needs JavaScript. Short version: static suits mostly-pages sites, WordPress suits regular edits by a non-technical team, and shops or accounts need a real backend, WordPress or something else.</p></noscript>
       </div>
     </section>
 
@@ -387,4 +399,5 @@ const headSource = [
 
   <script src="../scripts/checklist.ts"></script>
   <script src="../scripts/stars.ts"></script>
+  <script src="../scripts/quiz.ts"></script>
 </Base>

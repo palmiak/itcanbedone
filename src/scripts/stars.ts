@@ -1,23 +1,36 @@
-// Random shining stars: each spark fades in and out at its own pace, then reappears somewhere new.
-// Skipped entirely for visitors who prefer reduced motion.
+// A calm sky: only one or two stars shine at a time. Each fades in and out slowly, rests for a
+// random moment, then shines again somewhere new. Skipped entirely for reduced motion.
 const sky = document.querySelector<HTMLElement>('.sky');
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const between = (min: number, max: number) => min + Math.random() * (max - min);
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 if (sky && !calm) {
-  const count = window.innerWidth < 600 ? 14 : 30;
-  const place = (el: HTMLElement) => {
-    el.style.left = `${Math.random() * 100}%`;
-    el.style.top = `${Math.random() * 92}%`;
-    el.style.animationDuration = `${2.4 + Math.random() * 4.2}s`;
+  const shine = async (spark: HTMLElement, startDelay: number) => {
+    await wait(startDelay);
+    for (;;) {
+      spark.style.left = `${between(2, 98)}%`;
+      spark.style.top = `${between(3, 92)}%`;
+      const size = between(2.2, 4.4);
+      spark.style.width = spark.style.height = `${size}px`;
+      spark.classList.toggle('gold', Math.random() < 0.2);
+      const fade = spark.animate(
+        [
+          { opacity: 0, transform: 'scale(0.4)' },
+          { opacity: 1, transform: 'scale(1.25)', offset: 0.5 },
+          { opacity: 0, transform: 'scale(0.4)' },
+        ],
+        { duration: between(3500, 6500), easing: 'ease-in-out', fill: 'backwards' },
+      );
+      await fade.finished.catch(() => undefined);
+      await wait(between(400, 2800));
+    }
   };
-  for (let i = 0; i < count; i += 1) {
+
+  for (const delay of [600, 2600]) {
     const spark = document.createElement('i');
-    spark.className = Math.random() < 0.22 ? 'spark gold' : 'spark';
-    const size = 2 + Math.random() * 2.6;
-    spark.style.width = spark.style.height = `${size}px`;
-    spark.style.animationDelay = `${Math.random() * 6}s`;
-    place(spark);
-    spark.addEventListener('animationiteration', () => place(spark));
+    spark.className = 'spark';
     sky.append(spark);
+    void shine(spark, delay);
   }
 }

@@ -204,7 +204,7 @@ export const checklist: { group: string; items: Check[] }[] = [
 export const matrix = [
   { need: 'Brochure, marketing, docs, blog', pick: 'Static', why: 'Content changes rarely, performance and security matter, nobody needs a login.' },
   { need: 'Non-technical editors publishing daily', pick: 'WordPress or static + headless CMS', why: 'WordPress editing is hard to beat. A headless CMS gives them roles and a friendly editor, but it is one more thing to pay for, and to patch if you self-host it.' },
-  { need: 'Shop, memberships, heavy dynamic content', pick: 'WordPress / a real platform', why: 'This is the original\'s home turf and it is right. Static fights you here.' },
+  { need: 'Shop, memberships, heavy dynamic content', pick: 'WordPress, or something else', why: 'This is the original\'s home turf and it is right. Static fights you here.' },
   { need: 'Throwaway demo or prototype', pick: 'Vibe it', why: 'It looks done and that is fine, until it ships.' },
   { need: 'Nobody will own updates', pick: 'Static', why: 'Unpatched WordPress decays. Unpatched static files do not run code. A self-hosted CMS would decay too.' },
 ];

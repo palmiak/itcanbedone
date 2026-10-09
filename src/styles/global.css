@@ -353,3 +353,9 @@ footer.site p { max-width: 38ch; }
 .result-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-top: 1.4rem; font: 500 0.9rem var(--mono); }
 .again { margin-top: 1.2rem; font-size: 0.9rem; padding: 0.7rem 1.2rem; }
 @media (prefers-reduced-motion: reduce) { .choice span { transition: none; } }
+
+/* mobile header: logo only */
+@media (max-width: 46rem) {
+  .bar .by, .brand .by, .nav { display: none; }
+  html { scroll-padding-top: 4.5rem; }
+}

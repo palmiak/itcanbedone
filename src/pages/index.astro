@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { questions, results, priority, outcomeNames } from '../data/line';
-import { layerGroups, incidents, costs, vulns, vulnNote, wpSupply, fairPoints, staticRisks, stats, checklist } from '../data/content';
+import { layerGroups, incidents, costs, vulns, wpSupply, fairPoints, staticRisks, stats, checklist } from '../data/content';
 
 const log = [
   ['sitemap-index.xml', 'generated'],
@@ -217,7 +217,6 @@ const headSource = [
             </tbody>
           </table>
         </div>
-        <p class="small gap">{vulnNote}</p>
 
         <h3 class="subhead">Supply-chain attacks hit WordPress too</h3>
         <ul class="points">

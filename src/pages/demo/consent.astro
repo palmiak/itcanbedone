@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 ---
 <Base title="Consent + tracking demo | It's Done" description="A working consent banner on a static Astro page. The tracker stays blocked until you accept.">
-  <div class="bar"><div class="wrap"><a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a><a class="by" href="/#checklist">← back to the checklist</a></div></div>
+  <header class="top"><div class="bar"><div class="wrap"><a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a><a class="by" href="/#checklist">← back to the checklist</a></div></div></header>
   <main class="wrap demo">
     <h1 class="display">Consent, then tracking.</h1>
     <div class="prose">
@@ -18,7 +18,7 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css';
 
     <div class="demo-grid">
       <div>
-        <h3>What the page is doing</h3>
+        <h2>What the page is doing</h2>
         <div class="log" id="status" aria-live="polite">
           <div class="head">$ watch network</div>
           <div class="row"><span>analytics.js</span><span id="s-tracker" class="zero">blocked · consent: none</span></div>
@@ -30,7 +30,7 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css';
         </div>
       </div>
       <div>
-        <h3>The markup that does it</h3>
+        <h2>The markup that does it</h2>
 <pre class="term">&lt;!-- inert until "analytics" is accepted --&gt;
 &lt;script type="text/plain"
         data-category="analytics"

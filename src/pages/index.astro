@@ -24,15 +24,16 @@ const headSource = [
 ].join('\n');
 ---
 <Base title={pageTitle} description={pageDescription}>
-  <div class="draft" role="note">Draft. Security figures were checked against the linked sources on 2026-10-09. Costs and request/response snippets are illustrative.</div>
   <a class="skip" href="#main">Skip to content</a>
-
-  <div class="bar">
-    <div class="wrap">
-      <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
-      <span class="by">a reply, by one person with a git repo</span>
+  <header class="top">
+    <div class="draft" role="note">Draft. Security figures were checked against the linked sources on 2026-10-09. Costs and request/response snippets are illustrative.</div>
+    <div class="bar">
+      <div class="wrap">
+        <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
+        <span class="by">a reply, by one person with a git repo</span>
+      </div>
     </div>
-  </div>
+  </header>
 
   <main id="main">
     <header class="hero">
@@ -196,7 +197,7 @@ const headSource = [
             security team" covers core. The plumbing it lists (SEO, forms, consent, backups) comes from plugins.
           </p>
         </div>
-        <div class="tablewrap">
+        <div class="tablewrap" tabindex="0" role="region" aria-label="Reported vulnerabilities, scrolls sideways on small screens">
           <table>
             <thead><tr><th>Category</th><th>What was reported</th><th>Who can trigger it</th><th>Source</th></tr></thead>
             <tbody>
@@ -234,7 +235,7 @@ const headSource = [
             <li><strong>{r.title}</strong> {r.text}{r.href && <> <a href={r.href} target="_blank" rel="noopener">{r.source} ↗<span class="sr-only"> (opens in a new tab)</span></a></>}</li>
           ))}
         </ul>
-        <p class="small gap">This site installs 202 packages to build (7 direct) and none run on a server. Fewer, pinned dependencies and a committed lockfile make that surface easier to review.</p>
+        <p class="small gap">This site installs 204 packages to build and test it (9 direct) and none run on a server. Fewer, pinned dependencies and a committed lockfile make that surface easier to review.</p>
       </div>
     </section>
 
@@ -311,7 +312,7 @@ const headSource = [
           <h2 class="display">Where's your line?</h2>
           <p>Pick the tool for the job. Sometimes that is WordPress.</p>
         </div>
-        <div class="tablewrap">
+        <div class="tablewrap" tabindex="0" role="region" aria-label="Which tool for which job, scrolls sideways on small screens">
           <table>
             <thead><tr><th>You need</th><th>Pick</th><th>Why</th></tr></thead>
             <tbody>

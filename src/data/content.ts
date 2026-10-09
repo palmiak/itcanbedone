@@ -9,20 +9,20 @@ export const layerGroups: LayerGroup[] = [
     { name: 'Redirects & 404s', static: 'A plain-text redirects file at the host edge, plus a 404 page that is just a file. Versioned and reviewable in a diff.', without: 'Broken links, lost traffic and a blank page for a mistyped URL.', tryIt: { label: 'Try /prodcuts', href: '/prodcuts' } },
   ]},
   { name: 'Running the site', cost: 'medium', layers: [
-    { name: 'Editorial workflow', static: 'Markdown in git, where pull requests are your revisions. Non-technical editors need a headless CMS.', without: 'Every typo becomes a developer ticket.', needs: 'A CMS: a subscription, or a server you maintain' },
+    { name: 'Editorial workflow', static: 'Content lives as Markdown files in git, and pull requests are your review and revision history. That suits people comfortable with git. Editors who are not will want a headless CMS, which is a separate product with its own cost (see the receipts).', without: 'No review step and no history: nobody can tell who changed what, or undo it.', needs: 'Git comfort, or a CMS for editors who have none' },
     { name: 'Roles & permissions', static: 'A static site has no users. Who can publish is set in your Git host and, if you add one, your CMS.', without: 'Everyone, or nobody, can publish.', needs: 'Git host and CMS settings' },
     { name: 'Media pipeline', static: 'Images are resized, converted to AVIF or WebP and given dimensions at build time.', without: 'A 14 MB hero photo and a slow page.' },
     { name: 'Forms & lead capture', static: 'A host-level form service such as Netlify Forms, or a serverless function behind a bot check.', without: 'A flooded inbox, or leads that vanish.', needs: 'A form service or a function', tryIt: { label: 'Try the form', href: '/demo/form' } },
   ]},
   { name: 'Managing risk', cost: 'high', layers: [
-    { name: 'Security patching', static: 'The host patches its platform. You update build-time dependencies in a pull request and run the audit. No application server of your own to exploit.', without: 'Known holes stay open, and mass exploitation can arrive within hours.', tryIt: { label: 'Knock on /wp-login.php', href: '/wp-login.php' } },
-    { name: 'Accessibility', static: 'Semantic HTML plus axe or pa11y in CI, so a regression fails the build instead of reaching users.', without: 'Visitors are locked out, and there is legal exposure.' },
+    { name: 'Security & updates', static: 'A static site has no application of its own running for visitors: no database, no plugins, no login page. What remains to patch is the build toolchain (npm dependencies, see the risks section) and the accounts that can deploy. The host patches its own platform. A CMS or serverless functions, if you add them, are separate systems with their own patching.', without: 'Little reaches visitors. The risk moves to you: an outdated toolchain, or a compromised dependency or deploy account, can put bad code into the next build.', tryIt: { label: 'Knock on /wp-login.php', href: '/wp-login.php' } },
+    { name: 'Accessibility', static: 'Semantic HTML, a visible keyboard focus ring and an automated axe-core check you can run with npm run a11y. Our first run found real bugs, which we fixed and re-tested (details in the checklist). Automated tools catch only part of the problems, so keyboard and screen-reader testing is still on you.', without: 'Visitors who use a keyboard or screen reader get locked out, and there can be legal exposure.' },
     { name: 'Privacy & consent', static: 'A small open-source consent library gates trackers until a visitor accepts. Astro has no built-in one, but an integration exists.', without: 'Trackers load before anyone has said yes.', needs: 'A consent library, or a hosted platform', tryIt: { label: 'Try the consent demo', href: '/demo/consent' } },
     { name: 'Backups & rollback', static: 'The site is a git repo plus a build, and most hosts keep earlier deploys, so rollback is a click.', without: 'No way back from a bad release.', needs: 'Separate backups for any SaaS CMS content' },
   ]},
   { name: 'Staying alive', cost: 'existential', layers: [
-    { name: 'Maintainability', static: 'A lockfile, pinned dependencies and a build in CI. Someone still has to bump the dependencies.', without: 'Nobody can change the site safely.' },
-    { name: 'Integrations', static: 'APIs are called at build time, from the browser, or through a function. Each one is another company\'s software.', without: 'CRM, newsletter and analytics are disconnected.', needs: 'Each integration is a dependency' },
+    { name: 'Maintainability', static: 'The site is plain files in a repo, so anyone with access can read it, build it and change it. The cost is dependencies: a lockfile pins them, but they age, and framework upgrades (an Astro major version, for example) need migration work.', without: 'In a year the author has moved on, the dependencies are stale and nobody dares touch the build.', needs: 'Someone who owns updates' },
+    { name: 'Integrations', static: 'Not where static shines. Anything that needs a server-side secret or a login, such as CRM sync, payments or personalisation, needs a serverless function or a third-party service. Each one is code you maintain or a vendor you depend on. WordPress has a far larger ecosystem of ready-made integrations.', without: 'Leads, newsletter and analytics sit in separate tools that do not talk to each other.', needs: 'A function or a service for each one' },
     { name: 'Scale & uptime', static: 'Plain files on a CDN. A front-page mention is a non-event.', without: 'A traffic spike takes the site down.' },
   ]},
 ];
@@ -64,9 +64,9 @@ export const incidents: Incident[] = [
     options: {
       heading: 'Your host can already do this',
       items: [
-        { name: 'Netlify Forms', text: 'Every submission goes through Akismet. Add a honeypot field, a reCAPTCHA 2, or both, with a couple of attributes on your <form>.', href: 'https://docs.netlify.com/forms/spam-filters/' },
-        { name: 'Vercel BotID', text: 'An invisible bot check for the routes you pick, with no visible CAPTCHA. It needs the form sent with fetch, not a plain HTML form action.', href: 'https://vercel.com/docs/botid' },
-        { name: 'Cloudflare Turnstile', text: 'A free CAPTCHA alternative. The widget alone does nothing: a function has to verify the token server-side.', href: 'https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/' },
+    { name: 'Netlify Forms', text: 'Every submission goes through Akismet. Add a honeypot field, a reCAPTCHA 2, or both, with a couple of attributes on your <form>.', href: 'https://docs.netlify.com/forms/spam-filters/' },
+    { name: 'Vercel BotID', text: 'An invisible bot check for the routes you pick, with no visible CAPTCHA. It needs the form sent with fetch, not a plain HTML form action.', href: 'https://vercel.com/docs/botid' },
+    { name: 'Cloudflare Turnstile', text: 'A free CAPTCHA alternative. The widget alone does nothing: a function has to verify the token server-side.', href: 'https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/' },
       ],
     },
   },
@@ -83,10 +83,10 @@ export const incidents: Incident[] = [
     options: {
       heading: 'Most businesses will want a banner, and Astro has no built-in one',
       items: [
-        { name: 'astro-cookieconsent', text: 'A ready Astro integration that wraps vanilla-cookieconsent. One `astro add` and a config object.', href: 'https://github.com/jop-software/astro-cookieconsent' },
-        { name: 'vanilla-cookieconsent', text: 'The open-source library underneath, no framework needed. This is what the demo uses. Scripts marked with a category stay inert until accepted.', href: 'https://github.com/orestbida/cookieconsent' },
-        { name: 'Hosted consent platforms', text: 'Cookie-Script, CookieChimp and ConsentPro publish Astro setup guides, for teams that need their own dashboard or Google Consent Mode v2 handling.', href: 'https://cookie-script.com/guides/cookie-consent-for-astro' },
-        { name: 'Cookieless analytics', text: 'Tools like Plausible or Umami set no cookies. Whether that removes the need for consent depends on your jurisdiction, so ask your lawyer.', href: 'https://plausible.io/data-policy' },
+    { name: 'astro-cookieconsent', text: 'A ready Astro integration that wraps vanilla-cookieconsent. One `astro add` and a config object.', href: 'https://github.com/jop-software/astro-cookieconsent' },
+    { name: 'vanilla-cookieconsent', text: 'The open-source library underneath, no framework needed. This is what the demo uses. Scripts marked with a category stay inert until accepted.', href: 'https://github.com/orestbida/cookieconsent' },
+    { name: 'Hosted consent platforms', text: 'Cookie-Script, CookieChimp and ConsentPro publish Astro setup guides, for teams that need their own dashboard or Google Consent Mode v2 handling.', href: 'https://cookie-script.com/guides/cookie-consent-for-astro' },
+    { name: 'Cookieless analytics', text: 'Tools like Plausible or Umami set no cookies. Whether that removes the need for consent depends on your jurisdiction, so ask your lawyer.', href: 'https://plausible.io/data-policy' },
       ],
     },
   },
@@ -185,6 +185,7 @@ export const checklist: { group: string; items: Check[] }[] = [
   ]},
   { group: 'What the original does not check', items: [
     { title: 'Is it patched?', ask: 'Run the audit on what actually ships.', kind: 'term', code: '$ npm audit\nfound 0 vulnerabilities', note: 'Real output from this site, when it was built. It only covers published advisories, so it is a floor, not a guarantee. On WordPress the equivalent is a list of plugins, each with its own vendor and update cadence.' },
+    { title: 'Is it accessible?', ask: 'Run an automated audit, then remember it is only part of the job.', kind: 'term', code: '$ npm run a11y\naxe-core 4.14.0: no violations across 4 pages at 2 widths', note: 'Real output from this site. The first run was not clean: content outside landmarks, a skipped heading level on both demo pages, and scrolling code blocks and tables that a keyboard could not reach. A hand calculation also caught white badge text failing contrast on the pink end of the gradient. We fixed all of it and re-ran the audit. axe cannot judge contrast over gradients, so we calculated it: the lowest text pair is 5.1 to 1. Automated checks do not replace testing with a keyboard and a screen reader, which we have not done.' },
     { title: 'What can a stranger reach?', ask: 'Knock on the doors every WordPress site has.', kind: 'links', links: [{ label: 'GET /wp-login.php', href: '/wp-login.php' }, { label: 'GET /xmlrpc.php', href: '/xmlrpc.php' }, { label: 'GET /wp-admin/', href: '/wp-admin/' }], note: 'Static files have no login page, no database and no PHP to attack, so each is a plain 404. The host still has an account and a CDN that someone must secure.' },
   ]},
 ];

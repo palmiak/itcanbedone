@@ -25,7 +25,7 @@
 
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --measure: 62ch;
-  --badge: linear-gradient(135deg, #ff7eb6, #8f6bff);
+  --badge: linear-gradient(135deg, #c92c75, #6a45e6);
   color-scheme: dark;
 }
 
@@ -72,7 +72,7 @@ strong { font-weight: 600; color: #fff; }
 a.by:hover { color: #fff; }
 
 /* ---------- hero: the night sky ---------- */
-.hero { position: relative; isolation: isolate; overflow: clip; text-align: center; padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3.5rem, 8vw, 6rem);
+.hero { position: relative; isolation: isolate; overflow: clip; text-align: center; padding-block: clamp(3.5rem, 8vw, 6rem) clamp(6rem, 11vw, 9rem);
   background:
     radial-gradient(120% 70% at 78% 8%, rgb(247 239 198 / 0.14), transparent 55%),
     linear-gradient(180deg, #060814 0%, #0e1440 38%, #231f66 72%, #4a2f7d 100%); }
@@ -119,13 +119,13 @@ a.by:hover { color: #fff; }
 
 /* build log in a window frame, like their browser mockups */
 .log-wrap { position: relative; max-width: 40rem; margin: clamp(2.5rem, 6vw, 4rem) auto 0; text-align: left; }
-.log { background: rgb(8 10 30 / 0.82); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / 0.2); border-radius: 16px; box-shadow: 0 30px 80px rgb(0 0 0 / 0.5), 0 0 0 6px rgb(255 255 255 / 0.04); font: 500 0.85rem/1.8 var(--mono); padding: 0 1.3rem 1.3rem; overflow-x: auto; }
+.log { background: rgb(8 10 30 / 0.82); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / 0.2); border-radius: 16px; box-shadow: 0 30px 80px rgb(0 0 0 / 0.5), 0 0 0 6px rgb(255 255 255 / 0.04); font: 500 0.85rem/1.8 var(--mono); padding: 0 1.3rem 1.3rem; }
 .log .head { display: flex; align-items: center; gap: 0.5rem; margin: 0 -1.3rem 0.8rem; padding: 0.8rem 1.3rem; border-bottom: 1px solid var(--line); color: var(--muted); }
 .log .head::before { content: ''; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: #ff7a7a; box-shadow: 1.1rem 0 #f6d77a, 2.2rem 0 #7fe3b0; margin-right: 2.6rem; }
-.log .row { display: flex; gap: 0.75rem; justify-content: space-between; white-space: nowrap; }
+.log .row { display: flex; flex-wrap: wrap; gap: 0 0.75rem; justify-content: space-between; }
 .log .ok { color: var(--mint); } .log .zero { color: var(--star); }
 .log .last { margin-top: 0.6rem; border-top: 1px dashed var(--line); padding-top: 0.6rem; }
-.big-stamp { position: absolute; right: -2.2rem; bottom: -3.4rem; display: grid; place-items: center; width: clamp(5.2rem, 11vw, 6.8rem); aspect-ratio: 1; border-radius: 50%; background: var(--badge); color: #fff; font: italic 400 clamp(1.1rem, 2.4vw, 1.5rem)/1 var(--serif); transform: rotate(-9deg); box-shadow: 0 0 40px rgb(143 107 255 / 0.55), inset 0 0 0 4px rgb(255 255 255 / 0.25); }
+.big-stamp { position: absolute; right: -1.6rem; bottom: -4.6rem; display: grid; place-items: center; width: clamp(5.2rem, 11vw, 6.8rem); aspect-ratio: 1; border-radius: 50%; background: var(--badge); color: #fff; font: italic 400 clamp(1.1rem, 2.4vw, 1.5rem)/1 var(--serif); transform: rotate(-9deg); box-shadow: 0 0 40px rgb(143 107 255 / 0.55), inset 0 0 0 4px rgb(255 255 255 / 0.25); }
 @keyframes pop { 0% { opacity: 0; transform: rotate(-9deg) scale(0.4); } 70% { opacity: 1; transform: rotate(-9deg) scale(1.08); } 100% { opacity: 1; transform: rotate(-9deg) scale(1); } }
 @keyframes print { from { opacity: 0; transform: translateY(0.4rem); } to { opacity: 1; transform: none; } }
 .log .row { animation: print 0.35s ease-out both; animation-delay: 0.2s; }
@@ -249,7 +249,7 @@ footer.site p { max-width: 38ch; }
 .demo { padding-block: clamp(2.5rem, 6vw, 5rem) 5rem; }
 .demo h1 { font-size: clamp(3rem, 8vw, 5.8rem); margin-bottom: 1.5rem; color: #fff; }
 .demo-grid { display: grid; gap: clamp(1.5rem, 4vw, 3rem); grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); margin-top: 2.5rem; align-items: start; }
-.demo-grid h3 { margin-bottom: 0.7rem; }
+.demo-grid h2 { font: 600 1.1rem/1.3 var(--sans); letter-spacing: -0.01em; margin-bottom: 0.7rem; color: #fff; }
 .form { display: grid; gap: 1.1rem; }
 .form label { display: grid; gap: 0.35rem; font: 500 0.82rem var(--mono); color: var(--muted); }
 .form input, .form textarea { font: 1.02rem var(--sans); padding: 0.75rem 0.9rem; border: 1px solid rgb(255 255 255 / 0.28); border-radius: 10px; background: rgb(255 255 255 / 0.05); color: #fff; width: 100%; }
@@ -298,3 +298,6 @@ footer.site p { max-width: 38ch; }
 @media (prefers-reduced-motion: reduce) { .box { transition: none; } }
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 46rem) { .term { white-space: pre-wrap; overflow-wrap: anywhere; } }
+.tablewrap:focus-visible { outline-offset: 2px; }

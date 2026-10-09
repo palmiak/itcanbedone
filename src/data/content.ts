@@ -129,7 +129,7 @@ export const costs = {
       { item: 'Build-time dependency updates (PRs)', range: 'about 1 hr / mo' },
       { item: 'Initial build', range: 'Agency quote' },
     ],
-    total: 'the host runs the server',
+    total: 'no server of yours to patch',
   },
   cms: {
     title: 'STATIC + HEADLESS CMS',

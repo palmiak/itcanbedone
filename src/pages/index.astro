@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { layerGroups, incidents, costs, vulns, vulnNote, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
+import { layerGroups, incidents, costs, vulns, vulnNote, wpSupply, fairPoints, staticRisks, stats, checklist, matrix } from '../data/content';
 
 const log = [
   ['sitemap-index.xml', 'generated'],
@@ -30,7 +30,7 @@ const headSource = [
     <div class="bar">
       <div class="wrap">
         <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
-        <span class="by">a reply, by one person with a git repo</span>
+        <span class="by">a reply, by Maciek Palmowski</span>
       </div>
     </div>
   </header>
@@ -124,7 +124,7 @@ const headSource = [
       <div class="wrap">
         <div class="band-head">
           <h2 class="display">Eight incidents. Three outcomes.</h2>
-          <p>The same coffee brand, built three ways, over the same working day. Snippets are illustrative; the links marked ↗ are live on this site.</p>
+          <p>The original's eight incidents, in its order and at its times. The vibe and WordPress outputs follow what it shows. The static column and the notes are ours, and our snippets are illustrative; the links marked ↗ are live on this site.</p>
         </div>
         <ol class="rail">
           {incidents.map((i) => (
@@ -136,6 +136,7 @@ const headSource = [
                 <div class="wp"><b>WordPress</b>{i.wp}<pre class="art">{i.wpCode}</pre></div>
                 <div class="static"><b>Static, built properly</b>{i.static}<pre class="art">{i.staticCode}</pre></div>
               </div>
+              {i.note && <p class="note"><b>Note:</b> {i.note}</p>}
               {i.tryIt && <p class="try"><a href={i.tryIt.href} target="_blank" rel="noopener">{i.tryIt.label} ↗<span class="sr-only"> (opens in a new tab)</span></a></p>}
               {i.options && (
                 <div class="opts">
@@ -150,10 +151,6 @@ const headSource = [
             </li>
           ))}
         </ol>
-        <p class="small gap">
-          The typo fix is the honest soft spot: a non-technical editor is happiest in the WordPress admin. A headless
-          CMS or a Git-based editor narrows the gap, but it is a real trade-off.
-        </p>
       </div>
     </section>
 
@@ -192,7 +189,7 @@ const headSource = [
         </p>
         <div class="prose lead-in">
           <p>
-            Figures are from <a href="https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/" target="_blank" rel="noopener">Patchstack's State of WordPress Security in 2026<span class="sr-only"> (opens in a new tab)</span></a>, a security vendor with its own interest in the topic.
+            Figures are from <a href="https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/" target="_blank" rel="noopener">Patchstack's State of WordPress Security in 2026<span class="sr-only"> (opens in a new tab)</span></a>, a security vendor, and my employer, so I have an interest in the topic.
             By their count, {stats[3].n} of 2025's vulnerabilities had no patch at disclosure. The original's "dedicated
             security team" covers core. The plumbing it lists (SEO, forms, consent, backups) comes from plugins.
           </p>
@@ -208,6 +205,14 @@ const headSource = [
           </table>
         </div>
         <p class="small gap">{vulnNote}</p>
+
+        <h3 class="subhead">Supply-chain attacks hit WordPress too</h3>
+        <ul class="points">
+          {wpSupply.map((r) => (
+            <li><strong>{r.title}</strong> {r.text} <a href={r.href} target="_blank" rel="noopener">{r.source} ↗<span class="sr-only"> (opens in a new tab)</span></a></li>
+          ))}
+        </ul>
+        <p class="small gap">Both are the WordPress version of the npm risk below: you inherit whoever owns, or ships for, your dependencies.</p>
 
         <h3 class="subhead">What WordPress gets right</h3>
         <ul class="points">
@@ -347,13 +352,16 @@ const headSource = [
       <div class="foot-grid">
         <div class="foot-brand">
           <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
-          <p class="small">An independent reply to <a href="https://itlooksdone.com/" target="_blank" rel="noopener">itlooksdone.com<span class="sr-only"> (opens in a new tab)</span></a>. Not affiliated with its authors.</p>
+          <p class="small">A reply to <a href="https://itlooksdone.com/" target="_blank" rel="noopener">itlooksdone.com<span class="sr-only"> (opens in a new tab)</span></a>, by Maciek Palmowski. Not affiliated with its authors.</p>
         </div>
         <div>
           <h3>Who gains from what</h3>
           <p class="small">
-            The original is published by a WordPress agency, and it makes a fair case for WordPress where WordPress
-            fits. This page argues for static sites. Each of us gains from our own conclusion, so check the sources.
+            I work at <a href="https://patchstack.com/" target="_blank" rel="noopener">Patchstack<span class="sr-only"> (opens in a new tab)</span></a>,
+            a WordPress security company, and I like both Astro and WordPress. The vulnerability figures here come
+            from Patchstack's database and report, so I have a stake in them. This is a personal project, not an
+            official Patchstack publication. The original is published by a WordPress agency, which has its own
+            stake. Check the sources.
           </p>
         </div>
         <div>

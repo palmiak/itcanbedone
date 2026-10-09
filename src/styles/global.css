@@ -301,3 +301,6 @@ footer.site p { max-width: 38ch; }
 
 @media (max-width: 46rem) { .term { white-space: pre-wrap; overflow-wrap: anywhere; } }
 .tablewrap:focus-visible { outline-offset: 2px; }
+
+.note { margin-top: 0.8rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); max-width: 60ch; }
+.note b { font: 500 0.76rem var(--mono); color: var(--lav); }

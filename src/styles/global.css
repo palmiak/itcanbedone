@@ -233,7 +233,10 @@ code { font-family: var(--mono); font-size: 0.9em; color: var(--lav); }
 .closing .prose p { margin-inline: auto; }
 
 footer.site { background: var(--night-0); padding-block: 2.2rem 3.2rem; border-top: 1px solid var(--line); }
-footer.site p { max-width: 72ch; }
+footer.site h3 { font: 400 1.35rem/1.1 var(--serif); color: #fff; margin-bottom: 0.6rem; }
+footer.site p { max-width: 38ch; }
+.foot-grid { display: grid; gap: 2rem clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr 1.2fr 1.2fr; align-items: start; }
+.foot-brand .logo { margin-bottom: 0.8rem; }
 
 .notfound { min-height: 70vh; display: grid; align-content: center; gap: 1.2rem; padding-block: 4rem; }
 .notfound h1 { font-size: clamp(3.4rem, 12vw, 8rem); color: #fff; }
@@ -258,6 +261,8 @@ footer.site p { max-width: 72ch; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 62rem) {
+  .foot-grid { grid-template-columns: minmax(0, 1fr); }
+  footer.site p { max-width: 60ch; }
   .split { grid-template-columns: minmax(0, 1fr); }
   .split > h2 { position: static; }
 }

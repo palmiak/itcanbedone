@@ -14,14 +14,23 @@ const line = (left: string, right: string, cls: string) => {
   log.append(row);
 };
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (trap.value) {
-    line('POST /contact', 'rejected: honeypot filled', 'zero');
-  } else {
-    line('POST /contact', 'saved · team notified', 'ok');
+  const isBot = Boolean(trap.value);
+  const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    if (isBot) line('POST /contact', 'rejected: honeypot filled', 'zero');
+    else line('POST /contact', 'saved · team notified', 'ok');
+    form.reset();
+  } catch {
+    line('POST /contact', 'failed: not running on Netlify?', 'zero');
   }
-  form.reset();
 });
 
 document.getElementById('bot')?.addEventListener('click', () => {

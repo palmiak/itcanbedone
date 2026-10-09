@@ -8,13 +8,14 @@ import Base from '../../layouts/Base.astro';
     <div class="prose">
       <p>
         Submit it empty and the browser stops you. Then press <strong>Play the bot</strong>: it fills the hidden
-        trap field a human never sees, and the submission is dropped. This demo runs entirely in your browser and
-        sends nothing. In production the same markup posts to a form service.
+        trap field a human never sees, and the submission is dropped. Real submissions are posted to
+        Netlify Forms and emailed to the site owner; the bot's is discarded.
       </p>
     </div>
 
     <div class="demo-grid">
-      <form id="demo-form" class="form" action="#" method="post">
+      <form id="demo-form" class="form" name="contact" action="/demo/form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
         <label>Name <input name="name" required autocomplete="name" /></label>
         <label>Email <input name="email" type="email" required autocomplete="email" /></label>
         <label>Message <textarea name="message" rows="4" required minlength="10"></textarea></label>

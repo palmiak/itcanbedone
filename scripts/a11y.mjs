@@ -32,7 +32,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await page.evaluate(axeSource);
     const r = await page.evaluate(() => axe.run(document));
     engine = r.testEngine.version;
-    console.log(`${String(viewport.width).padStart(4)}px ${p.padEnd(16)} ${r.violations.length} violations, ${r.incomplete.length} need manual review`);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+    if (overflow) failed += 1;
+    console.log(`${String(viewport.width).padStart(4)}px ${p.padEnd(16)} ${r.violations.length} violations, ${r.incomplete.length} need manual review${overflow ? ', PAGE SCROLLS SIDEWAYS' : ''}`);
     for (const v of r.violations) {
       failed += 1;
       console.log(`   [${v.impact}] ${v.id}: ${v.help}\n     ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);

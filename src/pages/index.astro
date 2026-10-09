@@ -25,12 +25,23 @@ const headSource = [
 ---
 <Base title={pageTitle} description={pageDescription}>
   <a class="skip" href="#main">Skip to content</a>
+  <aside class="draft" aria-label="Draft status">Draft. Security figures were checked against the linked sources on 2026-10-09. Costs and request/response snippets are illustrative.</aside>
   <header class="top">
-    <div class="draft" role="note">Draft. Security figures were checked against the linked sources on 2026-10-09. Costs and request/response snippets are illustrative.</div>
     <div class="bar">
       <div class="wrap">
-        <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
-        <span class="by">a reply, by Maciek Palmowski</span>
+        <div class="brand">
+          <a class="logo" href="/">It's Done <span class="mini-stamp">Passed</span></a>
+          <span class="by">a reply, by Maciek Palmowski</span>
+        </div>
+        <nav class="nav" aria-label="Sections">
+          <a href="#agreed">The 80%</a>
+          <a href="#waterline">Layers</a>
+          <a href="#timeline">Launch day</a>
+          <a href="#receipt">Receipt</a>
+          <a href="#plugins">Risks</a>
+          <a href="#checklist">Checklist</a>
+          <a href="#matrix">Your line</a>
+        </nav>
       </div>
     </div>
   </header>
@@ -359,8 +370,8 @@ const headSource = [
           <p class="small">
             I work at <a href="https://patchstack.com/" target="_blank" rel="noopener">Patchstack<span class="sr-only"> (opens in a new tab)</span></a>,
             a security company, and I like both Astro and WordPress. This is my own side project, not an official
-            Patchstack thing. The original is from the WebDevStudios crew, who build WordPress sites and make a fair point.
-            Think of this as a friendly reply, not a fight. Do check the sources, though.
+            Patchstack thing. The original is from the WebDevStudios crew, who build amazing WordPress sites and make a
+            fair point. Do check the sources, though.
           </p>
         </div>
         <div>
@@ -375,4 +386,5 @@ const headSource = [
   </footer>
 
   <script src="../scripts/checklist.ts"></script>
+  <script src="../scripts/stars.ts"></script>
 </Base>
